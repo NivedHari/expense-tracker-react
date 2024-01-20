@@ -1,0 +1,21 @@
+.page {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  body {
+    margin: 0; 
+    overflow-x: hidden; 
+  }
+
+  .profile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: antiquewhite;
+    border-radius: 20px;
+    padding: 1rem;
+  }

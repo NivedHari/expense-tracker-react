@@ -3,13 +3,16 @@ import { Switch, Route } from "react-router-dom";
 import "./App.css";
 import AuthPage from "./Components/pages/AuthPage";
 import AuthContext from "./Components/store/auth-context";
-import StartingPage from "../src/Components/pages/StartingPage";
+import StartingPage from "./Components/pages/startingPage";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import Layout from "./Components/Layout/Layout";
+import Profile from "./Components/pages/Profile";
 
 function App() {
   const authCtx = useContext(AuthContext);
   return (
     <div>
+    <Layout/>
       <Switch>
         <Route path="/" exact>
           <StartingPage />
@@ -19,6 +22,7 @@ function App() {
             <AuthPage />
           </Route>
         )}
+        <Route path="/profile"><Profile/></Route>
         <Route path="*">
           <Redirect to="/"></Redirect>
         </Route>

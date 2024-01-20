@@ -1,0 +1,50 @@
+.profile {
+    margin: 10rem auto;
+    width: 100%;
+    max-width: 50rem;
+    border-radius: 6px;
+    background-color: #fff8f8;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    border: 1px solid grey;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .control {
+    margin-bottom: 0.5rem;
+  }
+
+  .profile h2{
+
+    margin-top: 0;
+    margin-bottom: 5rem;
+  }
+
+  .control label {
+    color: black;
+    margin-bottom: 0.5rem;
+    margin-right: 1rem;
+  }
+
+  .field{
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .actions {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .actions button {
+    cursor: pointer;
+    font: inherit;
+    color: white;
+    background-color: #006eff;
+    border: 1px solid #9f5ccc;
+    border-radius: 20px;
+    padding: 0.5rem 2.5rem;
+    margin: 1rem;
+  }
