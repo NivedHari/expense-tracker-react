@@ -1,4 +1,4 @@
-import { useRef, useContext, useEffect,useState } from "react";
+import { useRef, useContext, useEffect, useState } from "react";
 import classes from "./Profile.module.css";
 import AuthContext from "../store/auth-context";
 
@@ -8,6 +8,10 @@ const Profile = () => {
   const nameRef = useRef();
   const urlRef = useRef();
 
+  const [enteredData, setEnteredData] = useState({
+    displayName: "",
+    photoUrl: "",
+  });
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -36,18 +40,38 @@ const Profile = () => {
 
         const userData = await response.json();
         console.log("User Details:", userData.users[0]);
+
+        setEnteredData({
+          displayName: userData.users[0].displayName,
+          photoUrl: userData.users[0].photoUrl,
+        });
       } catch (error) {
         alert(error.message);
       }
     };
+
     fetchUserData();
   }, [token]);
+
+  const handleNameChange = (event) => {
+    setEnteredData((prevData) => ({
+      ...prevData,
+      displayName: event.target.value,
+    }));
+  };
+
+  const handleUrlChange = (event) => {
+    setEnteredData((prevData) => ({
+      ...prevData,
+      photoUrl: event.target.value,
+    }));
+  };
 
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    const enteredName = nameRef.current.value;
-    const enteredUrl = urlRef.current.value;
+    let enteredName = nameRef.current.value;
+    let enteredUrl = urlRef.current.value;
 
     try {
       const response = await fetch(
@@ -89,11 +113,23 @@ const Profile = () => {
         <div className={classes.field}>
           <div className={classes.control}>
             <label htmlFor="name">Full Name</label>
-            <input type="text" id="name" ref={nameRef}></input>
+            <input
+              type="text"
+              id="name"
+              ref={nameRef}
+              value={enteredData.displayName}
+              onChange={handleNameChange}
+            />
           </div>
           <div className={classes.control}>
             <label htmlFor="photo">Profile Photo URL</label>
-            <input type="text" id="photo" ref={urlRef}></input>
+            <input
+              type="text"
+              id="photo"
+              ref={urlRef}
+              value={enteredData.photoUrl}
+              onChange={handleUrlChange} 
+            />
           </div>
         </div>
         <div className={classes.actions}>
