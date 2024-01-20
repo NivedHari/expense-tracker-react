@@ -37,7 +37,7 @@ const AuthForm = () => {
     let url;
     if (isLogin) {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCGsfKHWAjmDu8yEHWUSWa8NmvoH1Vnv0s";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAEUhj2e9yIbn9BnM3fMuDORzFJrX1w9Fc";
       fetch(url, {
         method: "POST",
         body: JSON.stringify({
@@ -72,7 +72,7 @@ const AuthForm = () => {
         });
     } else {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCGsfKHWAjmDu8yEHWUSWa8NmvoH1Vnv0s";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAEUhj2e9yIbn9BnM3fMuDORzFJrX1w9Fc";
       fetch(url, {
         method: "POST",
         body: JSON.stringify({
