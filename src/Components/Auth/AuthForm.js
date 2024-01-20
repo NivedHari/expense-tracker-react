@@ -1,9 +1,12 @@
 import classes from "./AuthForm.module.css";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import AuthContext from "../store/auth-context";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
-
+  const history = useHistory();
+  const authCtx = useContext(AuthContext);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
@@ -19,7 +22,7 @@ const AuthForm = () => {
     const enteredPassword = passwordInputRef.current.value;
     const confirmPassword = confirmPasswordInputRef.current.value;
 
-    if (enteredPassword !== confirmPassword) {
+    if (!isLogin && enteredPassword !== confirmPassword) {
       alert("Passwords don't match !! ");
       return;
     }
@@ -33,7 +36,40 @@ const AuthForm = () => {
 
     let url;
     if (isLogin) {
-        //n
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCGsfKHWAjmDu8yEHWUSWa8NmvoH1Vnv0s";
+      fetch(url, {
+        method: "POST",
+        body: JSON.stringify({
+          email: enteredEmail,
+          password: enteredPassword,
+          returnSecureToken: true,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          
+          if (res.ok) {
+            return res.json();
+          } else {
+            return res.json().then((data) => {
+              let errorMessage = "Authentication Failed!";
+              if (data && data.error && data.error.message) {
+                errorMessage = data.error.message;
+              }
+              throw new Error(errorMessage);
+            });
+          }
+        })
+        .then((data) => {
+          authCtx.login(data.idToken);
+          history.replace("/");
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
     } else {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCGsfKHWAjmDu8yEHWUSWa8NmvoH1Vnv0s";
@@ -49,7 +85,6 @@ const AuthForm = () => {
         },
       }).then((res) => {
         if (res.ok) {
-            console.log("Signup success!")
         } else {
           return res.json().then((data) => {
             let errorMessage = "Authentication Failed!";
@@ -70,11 +105,16 @@ const AuthForm = () => {
             <h1 className={classes.h1}>{isLogin ? "Login" : "Sign Up"}</h1>
           </div>
           <div className={classes.control}>
-            {/* <label htmlFor="email">Your Email</label> */}
-            <input type="email" id="email" required ref={emailInputRef} placeholder="Your Email"/>
+            <input
+              type="email"
+              id="email"
+              required
+              ref={emailInputRef}
+              placeholder="Your Email"
+            />
           </div>
+
           <div className={classes.control}>
-            {/* <label htmlFor="password">Your Password</label> */}
             <input
               type="password"
               id="password"
@@ -83,8 +123,8 @@ const AuthForm = () => {
               placeholder="Your Password"
             />
           </div>
+
           <div className={classes.control}>
-            {/* <label htmlFor="confirmPassword">Confirm Password</label> */}
             <input
               type="password"
               id="confirmPassword"
@@ -93,9 +133,11 @@ const AuthForm = () => {
               placeholder="Confirm Password"
             />
           </div>
+
           <div className={classes.actions}>
             <button>{isLogin ? "Login" : "Create Account"}</button>
           </div>
+          {isLogin && <a href="#">Forgot Password?</a>}
         </form>
       </section>
       <div className={classes.create} onClick={switchAuthModeHandler}>
