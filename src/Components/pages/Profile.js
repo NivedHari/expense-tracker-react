@@ -138,6 +138,7 @@ const Profile = () => {
     } catch (error) {
       setVerificationStatus(`Verification Failed: ${error.message}`);
     }
+
   };
 
   useEffect(() => {
@@ -170,7 +171,7 @@ const Profile = () => {
             />
           </div>
           <div className={classes.control}>
-            <button className={classes.btn} onClick={verificationHandler}>
+            <button className={classes.btn} onClick={verificationHandler} >
               Verify Email
             </button>
           </div>

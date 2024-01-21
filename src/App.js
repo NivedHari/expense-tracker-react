@@ -8,6 +8,7 @@ import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import Layout from "./Components/Layout/Layout";
 import Profile from "./Components/pages/Profile";
 import ForgotPasswordForm from "./Components/Auth/ForgottPassordForm";
+import ExpensePage from "./Components/pages/Expenses/ExpensePage";
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -30,6 +31,9 @@ function App() {
         <Route path="/profile">
           <Profile />
         </Route>
+        {authCtx.isLoggedIn && (<Route path="/expenses">
+          <ExpensePage />
+        </Route>)}
         <Route path="*">
           <Redirect to="/"></Redirect>
         </Route>
