@@ -134,11 +134,15 @@ const Profile = () => {
       }
 
       setVerificationStatus("Verification email sent successfully!");
-      console.log(verificationStatus);
+      
     } catch (error) {
       setVerificationStatus(`Verification Failed: ${error.message}`);
     }
   };
+
+  useEffect(() => {
+    console.log("Verification Status:", verificationStatus);
+  }, [verificationStatus]);
 
   return (
     <section className={classes.profile}>
