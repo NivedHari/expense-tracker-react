@@ -7,23 +7,29 @@ import StartingPage from "./Components/pages/startingPage";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import Layout from "./Components/Layout/Layout";
 import Profile from "./Components/pages/Profile";
+import ForgotPasswordForm from "./Components/Auth/ForgottPassordForm";
 
 function App() {
   const authCtx = useContext(AuthContext);
   return (
     <div>
-    <Layout/>
+      <Layout />
       <Switch>
         <Route path="/" exact>
           <StartingPage />
-          {!authCtx.isLoggedIn && <Redirect to='/auth'></Redirect> }
+          {!authCtx.isLoggedIn && <Redirect to="/auth"></Redirect>}
         </Route>
         {!authCtx.isLoggedIn && (
-          <Route path="/auth">
+          <Route path="/auth" exact>
             <AuthPage />
           </Route>
         )}
-        <Route path="/profile"><Profile/></Route>
+        <Route path="/auth/forgot-password">
+          <ForgotPasswordForm />
+        </Route>
+        <Route path="/profile">
+          <Profile />
+        </Route>
         <Route path="*">
           <Redirect to="/"></Redirect>
         </Route>

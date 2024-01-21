@@ -2,6 +2,7 @@ import classes from "./AuthForm.module.css";
 import { useRef, useState, useContext } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import AuthContext from "../store/auth-context";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -50,7 +51,6 @@ const AuthForm = () => {
         },
       })
         .then((res) => {
-          
           if (res.ok) {
             return res.json();
           } else {
@@ -137,7 +137,7 @@ const AuthForm = () => {
           <div className={classes.actions}>
             <button>{isLogin ? "Login" : "Create Account"}</button>
           </div>
-          {isLogin && <a href="#">Forgot Password?</a>}
+          {isLogin && <Link to="/auth/forgot-password">Forgot Password?</Link>}
         </form>
       </section>
       <div className={classes.create} onClick={switchAuthModeHandler}>
