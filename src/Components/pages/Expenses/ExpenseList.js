@@ -1,5 +1,5 @@
-import React,{useEffect,useState} from 'react';
-import classes from './ExpenseList.module.css';
+import React, { useEffect, useState } from "react";
+import classes from "./ExpenseList.module.css";
 
 const ExpenseList = (props) => {
   const [expenses, setExpenses] = useState([]);
@@ -15,18 +15,16 @@ const ExpenseList = (props) => {
         }
 
         const data = await response.json();
-        // Assuming data is an object where each key is an expense ID
         const expensesArray = Object.values(data);
 
         setExpenses(expensesArray);
       } catch (error) {
         console.error("Fetch error:", error);
-        // Handle fetch error (e.g., show an error message)
       }
     };
 
     fetchData();
-  }, [expenses]); // Dependency array to ensure useEffect runs only once
+  }, [expenses]);
   return (
     <section className={classes.expense}>
       <div className={classes.expensesList}>
@@ -34,9 +32,9 @@ const ExpenseList = (props) => {
         <ul className={classes.expensesList}>
           {expenses.map((expense) => (
             <li key={expense.id}>
-              <strong>Amount:</strong> ${expense.amount} {" "}
+              <strong>Amount:</strong> ${expense.amount}{" "}
               <strong>Category:</strong> {expense.category}
-              <strong>Description:</strong> {expense.description} {" "}
+              <strong>Description:</strong> {expense.description}{" "}
             </li>
           ))}
         </ul>

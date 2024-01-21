@@ -5,7 +5,7 @@
   align-items: center;
   height: 100vh;
   background-color: #2b3dda;
-  overflow-y: hidden;
+  overflow-y: scroll;
   color: white;
   
 }
@@ -20,7 +20,7 @@
 
 body {
   margin: 0;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .circle {

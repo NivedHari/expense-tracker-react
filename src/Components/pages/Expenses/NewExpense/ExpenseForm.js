@@ -64,6 +64,7 @@ const ExpenseForm = (props) => {
       category: "Food",
     });
     props.onSaveExpense(expenseData);
+    // props.onAddExpense(expenseData);
   };
 
   return (
