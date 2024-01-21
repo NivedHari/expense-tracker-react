@@ -46,5 +46,15 @@
     border: 1px solid #9f5ccc;
     border-radius: 20px;
     padding: 0.5rem 2.5rem;
-    margin: 1rem;
+    
+  }
+
+  .btn{
+    cursor: pointer;
+    font: inherit;
+    color: white;
+    background-color: #006eff;
+    border: 1px solid #9f5ccc;
+    border-radius: 20px;
+    padding: 0.2rem 1rem;
   }

@@ -13,6 +13,8 @@ const Profile = () => {
     photoUrl: "",
   });
 
+  const [verificationStatus, setVerificationStatus] = useState(null);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -106,6 +108,38 @@ const Profile = () => {
     }
   };
 
+  const verificationHandler = async () => {
+    try {
+      const response = await fetch(
+        "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAEUhj2e9yIbn9BnM3fMuDORzFJrX1w9Fc",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            requestType: "VERIFY_EMAIL",
+            idToken: token,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const data = await response.json();
+        let errorMessage = "Verification Failed!";
+        if (data && data.error && data.error.message) {
+          errorMessage = data.error.message;
+        }
+        throw new Error(errorMessage);
+      }
+
+      setVerificationStatus("Verification email sent successfully!");
+      console.log(verificationStatus);
+    } catch (error) {
+      setVerificationStatus(`Verification Failed: ${error.message}`);
+    }
+  };
+
   return (
     <section className={classes.profile}>
       <h2>Contact Details</h2>
@@ -128,10 +162,16 @@ const Profile = () => {
               id="photo"
               ref={urlRef}
               value={enteredData.photoUrl}
-              onChange={handleUrlChange} 
+              onChange={handleUrlChange}
             />
           </div>
+          <div className={classes.control}>
+            <button className={classes.btn} onClick={verificationHandler}>
+              Verify Email
+            </button>
+          </div>
         </div>
+
         <div className={classes.actions}>
           <button>Update</button>
         </div>
