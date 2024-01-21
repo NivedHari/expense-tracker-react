@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ExpenseList from "./ExpenseList";
-import ExpenseForm from "./ExpenseForm";
+import NewExpense from "./NewExpense/NewExpense";
 import classes from "./ExpensePage.module.css";
 
 const ExpensePage = () => {
@@ -14,8 +14,8 @@ const ExpensePage = () => {
   
     return (
       <div>
-        <div>
-          <ExpenseForm onAddExpense={addExpenseHandler}/>
+        <div >
+          <NewExpense onAddExpense={addExpenseHandler}/>
         </div>
         <div className={classes.expenses_container}>
           <ExpenseList expenses={expensesList} />

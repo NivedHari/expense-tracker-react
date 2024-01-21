@@ -9,8 +9,8 @@ const ExpenseList = (props) => {
         <ul className={classes.expensesList}>
           {props.expenses.map((expense) => (
             <li key={expense.id}>
-              <strong>Amount:</strong> ${expense.amount} |{" "}
-              <strong>Description:</strong> {expense.description} |{" "}
+              <strong>Amount:</strong> ${expense.amount} {" "}
+              <strong>Description:</strong> {expense.description} {" "}
               <strong>Category:</strong> {expense.category}
             </li>
           ))}

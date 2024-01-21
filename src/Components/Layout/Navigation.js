@@ -19,6 +19,11 @@ const Navigation = () => {
         <ul>
           {isLoggedIn && (
             <li>
+              <Link to="/profile">Profile</Link>
+            </li>
+          )}
+          {isLoggedIn && (
+            <li>
               <button className={classes.logoutBtn} onClick={logoutHandler}>
                 Logout
               </button>

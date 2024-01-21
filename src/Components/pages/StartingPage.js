@@ -7,7 +7,7 @@ const StartingPage = () => {
       <h1>Welcome To Expense Tracker !!</h1>
       <div className={classes.profile}>
         <h2>Your Profile is Incomplete</h2>
-        <Link to="/profile"><h3>Complete now</h3></Link>
+        <Link to="/update-profile"><h3>Complete now</h3></Link>
       </div>
     </div>
   );

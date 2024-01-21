@@ -1,8 +1,8 @@
 import { useRef, useContext, useEffect, useState } from "react";
-import classes from "./Profile.module.css";
-import AuthContext from "../store/auth-context";
+import classes from "./UpdateDetails.module.css";
+import AuthContext from "../../store/auth-context";
 
-const Profile = () => {
+const UpdateDetails = () => {
   const authCtx = useContext(AuthContext);
   const token = authCtx.token;
   const nameRef = useRef();
@@ -185,4 +185,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default UpdateDetails;
