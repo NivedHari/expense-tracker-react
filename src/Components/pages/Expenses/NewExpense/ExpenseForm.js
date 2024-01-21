@@ -20,6 +20,44 @@ const ExpenseForm = (props) => {
     e.preventDefault();
 
     console.log("Submitted Data:", expenseData);
+
+    try {
+      fetch('https://expense-tracker-1a30a-default-rtdb.firebaseio.com/expenses.json', {
+        method: "POST",
+        body: JSON.stringify({
+          amount: expenseData.amount,
+          description: expenseData.description,
+          category: expenseData.category
+        }),
+        headers: {
+          "Content-type": "application/json",
+        }
+      })
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          } else {
+            return res.json().then((data) => {
+              let errorMessage = "Post Failed!";
+              if (data && data.error && data.error.message) {
+                errorMessage = data.error.message;
+              }
+              throw new Error(errorMessage);
+            });
+          }
+        })
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+
+    
+
     setExpenseData({
       amount: "",
       description: "",

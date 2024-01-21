@@ -12,7 +12,7 @@ const Navigation = () => {
 
   return (
     <header className={classes.header}>
-      <Link to="/">
+      <Link to="/expenses">
         <div className={classes.logo}>Expense Tracker</div>
       </Link>
       <nav>

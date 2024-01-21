@@ -1,21 +1,64 @@
 .page {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #2b3dda;
+  overflow-y: hidden;
+  color: white;
+  
+}
+.container{
+  margin-top: -10rem;
+}
+.page a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
 
-  body {
-    margin: 0; 
-    overflow-x: hidden; 
-  }
+body {
+  margin: 0;
+  overflow: hidden;
+}
 
-  .profile {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: antiquewhite;
-    border-radius: 20px;
-    padding: 1rem;
-  }
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: antiquewhite;
+  border-radius: 50%; 
+  width: 70px; 
+  height: 70px;
+}
+
+.arrow {
+  margin-top:3rem;
+  font-size: 4rem;
+  cursor: pointer;
+  color: #2b3dda;
+}
+
+
+.noticeContainer {
+  position: absolute;
+  top: 5rem;
+  right: 1rem;
+  background-color: #ffffff84;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.notice {
+  color: black;
+}
+
+.notice a{
+  color: white;
+}
+
+.notice a:hover{
+  color:rgb(98, 88, 236)
+}

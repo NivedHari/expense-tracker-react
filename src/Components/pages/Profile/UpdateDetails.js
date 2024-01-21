@@ -1,4 +1,5 @@
 import { useRef, useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import classes from "./UpdateDetails.module.css";
 import AuthContext from "../../store/auth-context";
 
@@ -12,8 +13,6 @@ const UpdateDetails = () => {
     displayName: "",
     photoUrl: "",
   });
-
-  const [verificationStatus, setVerificationStatus] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -41,7 +40,8 @@ const UpdateDetails = () => {
         }
 
         const userData = await response.json();
-        console.log("User Details:", userData.users[0]);
+
+        // console.log("User Details:", userData.users[0]);
 
         setEnteredData({
           displayName: userData.users[0].displayName,
@@ -108,43 +108,6 @@ const UpdateDetails = () => {
     }
   };
 
-  const verificationHandler = async () => {
-    try {
-      const response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAEUhj2e9yIbn9BnM3fMuDORzFJrX1w9Fc",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            requestType: "VERIFY_EMAIL",
-            idToken: token,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        const data = await response.json();
-        let errorMessage = "Verification Failed!";
-        if (data && data.error && data.error.message) {
-          errorMessage = data.error.message;
-        }
-        throw new Error(errorMessage);
-      }
-
-      setVerificationStatus("Verification email sent successfully!");
-      
-    } catch (error) {
-      setVerificationStatus(`Verification Failed: ${error.message}`);
-    }
-
-  };
-
-  useEffect(() => {
-    console.log("Verification Status:", verificationStatus);
-  }, [verificationStatus]);
-
   return (
     <section className={classes.profile}>
       <h2>Contact Details</h2>
@@ -170,15 +133,10 @@ const UpdateDetails = () => {
               onChange={handleUrlChange}
             />
           </div>
-          <div className={classes.control}>
-            <button className={classes.btn} onClick={verificationHandler} >
-              Verify Email
-            </button>
-          </div>
         </div>
 
         <div className={classes.actions}>
-          <button>Update</button>
+          <Link to="/profile"><button>Update</button></Link>
         </div>
       </form>
     </section>
