@@ -38,6 +38,7 @@ const Profile = () => {
         }
 
         const userData = await response.json();
+        console.log(userData.users);
 
         if (userData.users && userData.users.length > 0) {
           setUserName(userData.users[0].displayName || "Your Name");

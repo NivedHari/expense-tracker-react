@@ -64,7 +64,9 @@ const AuthForm = () => {
           }
         })
         .then((data) => {
-          authCtx.login(data.idToken);
+          const cleanedMail=`${enteredEmail.replace(/\.|@/g, "")}`;
+          authCtx.login(data.idToken,cleanedMail);
+          console.log(cleanedMail);
           history.replace("/");
         })
         .catch((err) => {

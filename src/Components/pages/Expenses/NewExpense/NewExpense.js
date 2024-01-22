@@ -22,6 +22,7 @@ const NewExpense = (props) => {
     setIsEditing(false);
   };
 
+
   return (
     <div className={classes.newExpense}>
       {!isEditing && (

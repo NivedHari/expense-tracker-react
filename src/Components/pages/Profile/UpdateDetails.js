@@ -1,13 +1,15 @@
 import { useRef, useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import classes from "./UpdateDetails.module.css";
 import AuthContext from "../../store/auth-context";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 
 const UpdateDetails = () => {
   const authCtx = useContext(AuthContext);
   const token = authCtx.token;
   const nameRef = useRef();
   const urlRef = useRef();
+  const history = useHistory();
 
   const [enteredData, setEnteredData] = useState({
     displayName: "",
@@ -103,6 +105,7 @@ const UpdateDetails = () => {
 
       const updatedUserData = await response.json();
       console.log("Update Success. Updated User Details:", updatedUserData);
+      history.replace("/profile");
     } catch (error) {
       alert(error.message);
     }
@@ -136,7 +139,7 @@ const UpdateDetails = () => {
         </div>
 
         <div className={classes.actions}>
-          <Link to="/profile"><button>Update</button></Link>
+          <button>Update</button>
         </div>
       </form>
     </section>
