@@ -2,6 +2,7 @@ import { useState,useEffect} from "react";
 import classes from "./ExpenseForm.module.css";
 
 const ExpenseForm = (props) => {
+  const isEditMode = !!props.expenseToEdit;
   const [expenseData, setExpenseData] = useState({
     amount: "",
     description: "",
@@ -9,7 +10,14 @@ const ExpenseForm = (props) => {
   });
 
   useEffect(() => {
-    console.log(props.expenseToEdit)
+    if (props.expenseToEdit) {
+      setExpenseData({
+        amount: props.expenseToEdit.amount,
+        description: props.expenseToEdit.description,
+        category: props.expenseToEdit.category,
+      });
+    }
+    console.log(props.expenseToEdit);
   }, [props.expenseToEdit]);
 
   const handleChange = (e) => {
@@ -29,8 +37,11 @@ const ExpenseForm = (props) => {
       description: "",
       category: "Food",
     });
-    props.onAddExpense(expenseData);
-    // props.onSaveExpense(expenseData);
+    if (isEditMode) {
+      props.onEditExpense(expenseData);
+    } else {
+      props.onAddExpense(expenseData);
+    }
   };
 
 

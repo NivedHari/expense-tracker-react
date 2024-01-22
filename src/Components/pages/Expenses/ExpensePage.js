@@ -78,6 +78,41 @@ const ExpensePage = (props) => {
     }
   };
 
+  const editExpenseItemHandler = async (expense) => {
+    setIsEditing(false);
+
+    try {
+      const response = await fetch(
+        `https://expense-tracker-1a30a-default-rtdb.firebaseio.com/${uEmail}/${expense.id}.json`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            amount: expense.amount,
+            description: expense.description,
+            category: expense.category,
+          }),
+          headers: {
+            "Content-type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Edit Failed!");
+      }
+      
+      const data = await response.json();
+      fetchData();
+      
+      console.log("Success:", data);
+
+      setExpensesList((prevExpenses) => [expense, ...prevExpenses]);
+    } catch (error) {
+      console.error("Fetch error:", error);
+      alert(error.message);
+    }
+  }
+
   useEffect(
     () => {
       fetchData();
@@ -105,11 +140,9 @@ const ExpensePage = (props) => {
   };
 
   const editExpenseHandler = (id) => {
-    console.log(id);
     setIsEditing(true);
-    // const expenseToEdit = expensesList.find((expense) => expense.id === id);
-    // console.log(expenseToEdit);
-    setExpenseToEdit(id);
+    const expenseToEdit = expensesList.find((expense) => expense.id === id);
+    setExpenseToEdit(expenseToEdit);
   };
 
   return (
@@ -121,7 +154,9 @@ const ExpensePage = (props) => {
         {isEditing && (
           <ExpenseForm
             onAddExpense={addExpenseHandler}
+            onEditExpense={editExpenseItemHandler}
             onCancel={stopEditingHandler}
+            expenseToEdit={expenseToEdit}
           />
         )}
       </div>
