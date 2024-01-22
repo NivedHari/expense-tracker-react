@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState,useEffect} from "react";
 import classes from "./ExpenseForm.module.css";
 
 const ExpenseForm = (props) => {
@@ -7,6 +7,10 @@ const ExpenseForm = (props) => {
     description: "",
     category: "Food",
   });
+
+  useEffect(() => {
+    console.log(props.expenseToEdit)
+  }, [props.expenseToEdit]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,7 +29,8 @@ const ExpenseForm = (props) => {
       description: "",
       category: "Food",
     });
-    props.onSaveExpense(expenseData);
+    props.onAddExpense(expenseData);
+    // props.onSaveExpense(expenseData);
   };
 
 

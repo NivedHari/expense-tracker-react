@@ -18,3 +18,20 @@
   border-radius: 12px;
   background-color: #92acee;
 }
+
+.edit{
+  cursor: pointer;
+  background-color: #1a005d;
+  border: 1px solid #14005d;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+}
+.delete{
+  cursor: pointer;
+  background-color: #e21919;
+  border: 1px solid #f80000;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+}
