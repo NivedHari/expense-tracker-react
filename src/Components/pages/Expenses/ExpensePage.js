@@ -3,7 +3,10 @@ import ExpenseList from "./ExpenseList";
 import { expenseActions } from "../../store/expense-slice";
 import { useSelector, useDispatch } from "react-redux";
 import classes from "./ExpensePage.module.css";
+import darkThemeClasses from "./DarkMode.module.css";
 import ExpenseForm from "./NewExpense/ExpenseForm";
+import { themeActions } from "../../store/theme-slice";
+import Papa from 'papaparse';
 
 const ExpensePage = (props) => {
   const dispatch = useDispatch();
@@ -11,8 +14,10 @@ const ExpensePage = (props) => {
   const uEmail = useSelector((state) => state.auth.email);
   const [expenseToEdit, setExpenseToEdit] = useState(null);
   const [totalAmount, setTotalAmount] = useState(0);
-
+  const [isLoading, setIsLoading] = useState(false);
+  const isDarkMode = useSelector((state) => state.theme.darkMode);
   const [isEditing, setIsEditing] = useState(false);
+
 
   const startEditingHandler = () => {
     setIsEditing(true);
@@ -38,25 +43,25 @@ const ExpensePage = (props) => {
         ...expense,
       }));
 
-
-      const newTotalAmount = expensesArray.reduce((total, expense) => {
+      let newTotalAmount = expensesArray.reduce((total, expense) => {
         return total + parseFloat(expense.amount);
       }, 0);
 
-      if(expensesArray.length === 0){
+      if (expensesArray.length === 0) {
         newTotalAmount = 0;
       }
 
-      
       setExpensesList(expensesArray);
       setTotalAmount(newTotalAmount);
       dispatch(expenseActions.add({ array: expensesArray }));
     } catch (error) {
       console.error("Expenses are empty");
     }
+    setIsLoading(false);
   }, [uEmail, dispatch]);
 
   const addExpenseHandler = async (expense) => {
+    setIsLoading(true);
     setIsEditing(false);
     try {
       const response = await fetch(
@@ -91,7 +96,7 @@ const ExpensePage = (props) => {
   };
 
   const editExpenseItemHandler = async (expense) => {
-    console.log("from edit", expense.id);
+    setIsLoading(true);
     setIsEditing(false);
 
     try {
@@ -135,6 +140,7 @@ const ExpensePage = (props) => {
   );
 
   const deleteExpenseHandler = async (id) => {
+    setIsLoading(true);
     console.log(id);
     dispatch(expenseActions.remove({ itemId: id }));
     try {
@@ -144,16 +150,16 @@ const ExpensePage = (props) => {
           method: "DELETE",
         }
       );
-      
+
       const updatedExpenses = expensesList.filter(
         (expense) => expense.id !== id
       );
       fetchData();
-      if(updatedExpenses.length === 0){
+      if (updatedExpenses.length === 0) {
         setTotalAmount(0);
       }
       setExpensesList(updatedExpenses);
-      
+      setIsLoading(false);
     } catch (error) {
       console.error("Error deleting the expense:", error);
     }
@@ -165,8 +171,40 @@ const ExpensePage = (props) => {
     setExpenseToEdit(expenseToEdit, id);
   };
 
+  const containerClasses = isDarkMode
+    ? `${classes.amount_container} ${darkThemeClasses.darkContainer}`
+    : classes.amount_container;
+  const listClasses = isDarkMode
+    ? `${classes.expenses_container} ${darkThemeClasses.darkContainer}`
+    : classes.expenses_container;
+
+  const amountClasses = isDarkMode
+    ? `${classes.amount} ${darkThemeClasses.darkText}`
+    : classes.amount;
+
+  const toggleThemeHandler = () => {
+    dispatch(themeActions.toggleTheme());
+  };
+
+  const downloadHandler = () => {
+    const csvData = Papa.unparse(expensesList, {
+      header: true,
+    });
+
+    const csvBlob = new Blob([csvData], { type: "text/csv;charset=utf-8" });
+    const csvUrl = URL.createObjectURL(csvBlob);
+
+    const link = document.createElement("a");
+    link.href = csvUrl;
+    link.download = "expenses.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+
   return (
-    <div>
+    <div className={classes.outer} id="out">
       <div className={classes.newExpense}>
         {!isEditing && (
           <button onClick={startEditingHandler}>Add New Expense</button>
@@ -180,16 +218,34 @@ const ExpensePage = (props) => {
           />
         )}
       </div>
-      <div className={classes.amount_container}>
-        <p className={classes.amount}>Total Expense : <strong>${totalAmount}</strong></p>
-        {totalAmount>=10000 && <button className={classes.premium}>Activate Premium</button>}
+      <div className={containerClasses}>
+        <p className={amountClasses}>
+          Total Expense : <strong>${totalAmount}</strong>
+        </p>
+        {totalAmount >= 10000 && (
+          <button className={classes.premium} onClick={toggleThemeHandler}>
+            Activate Premium
+          </button>
+        )}
       </div>
-      <div className={classes.expenses_container}>
-        <ExpenseList
-          expenses={expensesList}
-          onDelete={deleteExpenseHandler}
-          onEdit={editExpenseHandler}
-        />
+      <div className={listClasses}>
+        {!isLoading && expensesList.length > 0 && (
+          <div>
+            <ExpenseList
+              expenses={expensesList}
+              onDelete={deleteExpenseHandler}
+              onEdit={editExpenseHandler}
+            />
+            <button onClick={downloadHandler}>Download</button>
+
+            
+          </div>
+        )}
+
+        {!isLoading && expensesList.length === 0 && (
+          <p className={classes.loading}>No Expenses Added</p>
+        )}
+        {isLoading && <p className={classes.loading}>Loading..</p>}
       </div>
     </div>
   );

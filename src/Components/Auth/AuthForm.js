@@ -1,5 +1,5 @@
 import classes from "./AuthForm.module.css";
-import { useRef, useState, useContext } from "react";
+import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { authActions } from "../store/auth-slice";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
@@ -105,7 +105,7 @@ const AuthForm = () => {
   return (
     <div>
       <section className={classes.auth}>
-        <form onSubmit={submitHandler}>
+        <form onSubmit={submitHandler} >
           <div>
             <h1 className={classes.h1}>{isLogin ? "Login" : "Sign Up"}</h1>
           </div>

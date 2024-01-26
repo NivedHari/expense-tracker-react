@@ -12,7 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  position: relative;
   margin: 1rem 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   border-radius: 12px;
@@ -20,31 +20,7 @@
 }
 
 .expensesList li:hover {
-  transform: scale(1.05); 
+  transform: scale(1.03); 
   transition: transform 0.3s ease;
 }
 
-.edit{
-  cursor: pointer;
-  background-color: #1a005d;
-  border: 1px solid #14005d;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 12px;
-}
-.delete{
-  cursor: pointer;
-  background-color: #df4b4b;
-  border: 1px solid #c82727;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 12px;
-}
-
-.edit:hover{
-  background-color: #2d0c80;
-}
-
-.delete:hover{
-  background-color: #b13333;
-}

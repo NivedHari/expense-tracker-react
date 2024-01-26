@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: red;
 }
 
 .App-logo {
@@ -26,6 +27,6 @@
 
 
 
-body {
-  background-color: rgb(236, 236, 255);
-}
+/* body {
+  background-color: #ececff;
+} */

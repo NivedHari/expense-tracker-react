@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./ExpenseList.module.css";
+import ExpenseItem from "./ExpenseItem";
 
 const ExpenseList = (props) => {
   const deleteHandler = (id) => {
@@ -16,23 +17,12 @@ const ExpenseList = (props) => {
         <h2>Expenses List</h2>
         <ul className={classes.expensesList}>
           {props.expenses.map((expense) => (
-            <li key={expense.id}>
-              Amount: <strong>${expense.amount}</strong> Category:
-              <strong> {expense.category}</strong>
-              Description: <strong>{expense.description}</strong>{" "}
-              <button
-                className={classes.edit}
-                onClick={() => editHandler(expense.id)}
-              >
-                Edit
-              </button>
-              <button
-                className={classes.delete}
-                onClick={() => deleteHandler(expense.id)}
-              >
-                Delete
-              </button>
-            </li>
+            <ExpenseItem
+              key={expense.id}
+              expense={expense}
+              onEdit={editHandler}
+              onDelete={deleteHandler}
+            />
           ))}
         </ul>
       </div>
@@ -41,3 +31,6 @@ const ExpenseList = (props) => {
 };
 
 export default ExpenseList;
+
+
+

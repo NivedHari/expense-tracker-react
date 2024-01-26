@@ -14,7 +14,7 @@ import Profile from "./Components/pages/Profile/Profile";
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
   return (
-    <div>
+    <div className="app">
       <Layout />
       <Switch>
         <Route path="/" exact>
