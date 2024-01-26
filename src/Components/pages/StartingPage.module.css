@@ -4,9 +4,9 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #2b3dda;
+  background-color: #91abee;
   overflow-y: hidden;
-  color: white;
+  color: #14005d;
   
 }
 .container{
@@ -27,7 +27,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: antiquewhite;
+  background-color: #14005d;
   border-radius: 50%; 
   width: 70px; 
   height: 70px;
@@ -37,7 +37,7 @@ body {
   margin-top:3rem;
   font-size: 4rem;
   cursor: pointer;
-  color: #2b3dda;
+  color: white;
 }
 
 
@@ -53,12 +53,28 @@ body {
 
 .notice {
   color: black;
+  
 }
 
-.notice a{
+.linkContainer{
+  background-color: #14005d;
+  color: white;
+  width: 10rem;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.linkContainer:hover{
+  background-color: #14005dce;
   color: white;
 }
 
+.notice a{
+  color: #14005d;
+}
+
 .notice a:hover{
-  color:rgb(98, 88, 236)
+  color:#1c027ab4;
 }

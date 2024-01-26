@@ -1,12 +1,12 @@
-import { useEffect, useContext,useState } from "react";
+import { useEffect, useState } from "react";
 import classes from "./StartingPage.module.css";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import AuthContext from "../store/auth-context";
+import { authActions } from "../store/auth-slice";
+import { useSelector } from "react-redux";
 
 const StartingPage = () => {
-  const authCtx = useContext(AuthContext);
-  const token = authCtx.token;
-  const [profileComplete, setProfileComplete] = useState(false);
+  const token = useSelector(state=> state.auth.token);
+  const [profileComplete, setProfileComplete] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,9 +62,11 @@ const StartingPage = () => {
         {!profileComplete && (
           <div className={classes.noticeContainer}>
             <div className={classes.notice}>
-              <h2>Your Profile is Incomplete</h2>
+              <h2>Your Profile is Incomplete !</h2>
               <Link to="/update">
-                <h3>Complete now&#8594;</h3>
+                <div className={classes.linkContainer}>
+                  <h3>Complete now&#8594;</h3>
+                </div>
               </Link>
             </div>
           </div>

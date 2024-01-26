@@ -48,3 +48,37 @@
   .newExpense button.alternative:active {
     background-color: #ddb3f8;
   }
+
+  .amount{
+    font-size: 1.2rem;
+  }
+
+  .premium {
+    font: inherit;
+    cursor: pointer;
+    padding: 1rem 2rem;
+    border: 1px solid #14005d;
+    background-color: #1a005d;
+    color: white;
+    border-radius: 12px;
+   
+  }
+
+  .amount_container button:hover {
+    background-color: #180674;
+    border-color: rgb(30, 6, 116);
+  }
+
+  .amount_container{
+    background-color: #ffffff79;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    margin: 1rem auto;
+    max-width: 40rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }

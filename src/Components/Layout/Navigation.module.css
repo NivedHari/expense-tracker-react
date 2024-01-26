@@ -3,19 +3,25 @@
   left: 0;
   width: 100%;
   height: 5rem;
-  background-color: #2b3dda;
+  background-color: #91abee;
+  /* background-color: #2b3dda; */
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: space-between; 
   align-items: center;
   padding: 0 2rem;
+  
 }
 
 .logo {
   font-family: "Lato", sans-serif;
   font-size: 2rem;
-  color: white;
+  color: #14005d;
   margin: 0;
+}
+
+.logo:hover{
+  color: #14005d;
 }
 
 .header ul {
@@ -31,7 +37,7 @@
 }
 .header a {
   text-decoration: none;
-  color: white;
+  color: #14005d;
   font-weight: bold;
 }
 
@@ -39,7 +45,7 @@
   font: inherit;
   background-color: transparent;
   border: 1px solid white;
-  color: white;
+  color: #14005d;
   font-weight: bold;
   padding: 0.5rem 1.5rem;
   border-radius: 6px;
@@ -48,10 +54,10 @@
 }
 
 .header a:hover {
-  color: #c291e2;
+  color:white;
 }
 
 .header button:hover {
-  background-color: #c291e2;
-  color: #07015c;
+  background-color: #91abee9f;
+  color: white;
 }

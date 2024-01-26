@@ -1,13 +1,13 @@
-import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "./Navigation.module.css";
 import { Link } from "react-router-dom";
-import AuthContext from "../store/auth-context";
+import { authActions } from "../store/auth-slice";
 
 const Navigation = () => {
-  const authCtx = useContext(AuthContext);
-  const isLoggedIn = authCtx.isLoggedIn;
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
   const logoutHandler = () => {
-    authCtx.logout();
+    dispatch(authActions.logout());
   };
 
   return (

@@ -4,6 +4,7 @@ import classes from "./ExpenseList.module.css";
 const ExpenseList = (props) => {
   const deleteHandler =  (id)=> {
     props.onDelete(id);
+    
    console.log(props.expenses);
   }
   const editHandler = (id) => {
@@ -15,7 +16,7 @@ const ExpenseList = (props) => {
         <h2>Expenses List</h2>
         <ul className={classes.expensesList}>
           {props.expenses.map((expense) => (
-            <li key={expense.id}>
+            <li key={expense.id} >
               <strong>Amount:</strong> ${expense.amount}{" "}
               <strong>Category:</strong> {expense.category}
               <strong>Description:</strong> {expense.description}{" "}

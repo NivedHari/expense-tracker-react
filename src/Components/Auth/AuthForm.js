@@ -1,13 +1,15 @@
 import classes from "./AuthForm.module.css";
 import { useRef, useState, useContext } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import AuthContext from "../store/auth-context";
+import { authActions } from "../store/auth-slice";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch } from "react-redux";
 
 const AuthForm = () => {
+  const dispatch = useDispatch();
   const [isLogin, setIsLogin] = useState(true);
   const history = useHistory();
-  const authCtx = useContext(AuthContext);
+
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
@@ -65,7 +67,8 @@ const AuthForm = () => {
         })
         .then((data) => {
           const cleanedMail=`${enteredEmail.replace(/\.|@/g, "")}`;
-          authCtx.login(data.idToken,cleanedMail);
+          // authCtx.login(data.idToken,cleanedMail);
+          dispatch(authActions.login({ token: data.idToken, email: cleanedMail }));
           console.log(cleanedMail);
           history.replace("/");
         })

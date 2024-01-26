@@ -1,4 +1,4 @@
-import { useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import classes from "./ExpenseForm.module.css";
 
 const ExpenseForm = (props) => {
@@ -15,9 +15,9 @@ const ExpenseForm = (props) => {
         amount: props.expenseToEdit.amount,
         description: props.expenseToEdit.description,
         category: props.expenseToEdit.category,
+        id:props.expenseToEdit.id,
       });
     }
-    console.log(props.expenseToEdit);
   }, [props.expenseToEdit]);
 
   const handleChange = (e) => {
@@ -32,18 +32,23 @@ const ExpenseForm = (props) => {
     e.preventDefault();
 
     console.log("Submitted Data:", expenseData);
-    setExpenseData({
-      amount: "",
-      description: "",
-      category: "Food",
-    });
     if (isEditMode) {
       props.onEditExpense(expenseData);
+      setExpenseData({
+        amount: "",
+        description: "",
+        category: "Food",
+      });
     } else {
       props.onAddExpense(expenseData);
+      setExpenseData({
+        amount: "",
+        description: "",
+        category: "Food",
+      });
     }
+    
   };
-
 
   return (
     <form onSubmit={handleSubmit}>

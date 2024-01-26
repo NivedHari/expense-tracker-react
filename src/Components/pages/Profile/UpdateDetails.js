@@ -1,12 +1,14 @@
-import { useRef, useContext, useEffect, useState } from "react";
+import { useRef,useEffect, useState } from "react";
 import classes from "./UpdateDetails.module.css";
-import AuthContext from "../../store/auth-context";
+import { authActions } from "../../store/auth-slice";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 
 const UpdateDetails = () => {
-  const authCtx = useContext(AuthContext);
-  const token = authCtx.token;
+  // const authCtx = useContext(AuthContext);
+  // const token = authCtx.token;
+  const token = useSelector(state => state.auth.token);
   const nameRef = useRef();
   const urlRef = useRef();
   const history = useHistory();

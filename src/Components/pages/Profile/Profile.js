@@ -1,15 +1,17 @@
-import { useContext, useEffect, useState } from "react";
-import AuthContext from "../../store/auth-context";
+import { useEffect, useState } from "react";
+import { authActions } from "../../store/auth-slice";
+import { useSelector } from "react-redux";
 import classes from "./Profile.module.css";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const Profile = () => {
-  const authCtx = useContext(AuthContext);
-  const token = authCtx.token;
+  const token = useSelector((state) => state.auth.token);
   const [verificationStatus, setVerificationStatus] = useState(null);
   const [userName, setUserName] = useState("Not Set");
-  const [userEmail, setUserEmail] = useState("");
-  const [userUrl, setUserUrl] = useState("https://static-00.iconduck.com/assets.00/profile-icon-512x512-w0uaq4yr.png");
+  const [userEmail, setUserEmail] = useState("Not Set");
+  const [userUrl, setUserUrl] = useState(
+    "https://static-00.iconduck.com/assets.00/profile-icon-512x512-w0uaq4yr.png"
+  );
   const [userVerification, setUserVerification] = useState(false);
 
   useEffect(() => {
@@ -45,6 +47,7 @@ const Profile = () => {
           setUserEmail(userData.users[0].email || "your.email@example.com");
           setUserUrl(userData.users[0].photoUrl || "");
           setUserVerification(userData.users[0].emailVerified);
+
         } else {
           console.error("User data not found");
         }
@@ -54,7 +57,7 @@ const Profile = () => {
     };
 
     fetchData();
-  }, [token,verificationStatus]);
+  }, [token, verificationStatus]);
 
   const verificationHandler = async () => {
     try {
@@ -108,13 +111,13 @@ const Profile = () => {
                 ? "Verification Status: Verified"
                 : "Verification Status: Not Verified"}
             </p>
-            {!userVerification && (
-              <div className={classes.control}>
-                <button className={classes.btn} onClick={verificationHandler}>
-                  Verify Email
-                </button>
-              </div>
-            )}
+            {(!userVerification || verificationStatus === "Verification email sent successfully!") && (
+                <div className={classes.control}>
+                  <button className={classes.btn} onClick={verificationHandler}>
+                    Verify Email
+                  </button>
+                </div>
+              )}
           </div>
         </div>
       </div>

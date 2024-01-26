@@ -1,15 +1,16 @@
-import React, { useState, useCallback, useContext, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import ExpenseList from "./ExpenseList";
-import NewExpense from "./NewExpense/NewExpense";
-import AuthContext from "../../store/auth-context";
+import { expenseActions } from "../../store/expense-slice";
+import { useSelector, useDispatch } from "react-redux";
 import classes from "./ExpensePage.module.css";
 import ExpenseForm from "./NewExpense/ExpenseForm";
 
 const ExpensePage = (props) => {
+  const dispatch = useDispatch();
   const [expensesList, setExpensesList] = useState([]);
-  const authCtx = useContext(AuthContext);
-  const uEmail = authCtx.email;
+  const uEmail = useSelector((state) => state.auth.email);
   const [expenseToEdit, setExpenseToEdit] = useState(null);
+  const [totalAmount, setTotalAmount] = useState(0);
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -36,16 +37,22 @@ const ExpensePage = (props) => {
         id,
         ...expense,
       }));
-      console.log(expensesArray);
+
+      const newTotalAmount = expensesArray.reduce((total, expense) => {
+        return total + parseFloat(expense.amount);
+      }, 0);
+
+      
       setExpensesList(expensesArray);
+      setTotalAmount(newTotalAmount);
+      dispatch(expenseActions.add({ array: expensesArray }));
     } catch (error) {
-      console.error("Fetch error:", error);
+      console.error("Expenses are empty");
     }
-  }, []);
+  }, [uEmail, dispatch]);
 
   const addExpenseHandler = async (expense) => {
     setIsEditing(false);
-    console.log(uEmail);
     try {
       const response = await fetch(
         `https://expense-tracker-1a30a-default-rtdb.firebaseio.com/${uEmail}.json`,
@@ -65,11 +72,11 @@ const ExpensePage = (props) => {
       if (!response.ok) {
         throw new Error("Post Failed!");
       }
-      
-      const data = await response.json();
+
+      // const data = await response.json();
       fetchData();
-      
-      console.log("Success:", data);
+
+      // console.log("Success:", data);
 
       setExpensesList((prevExpenses) => [expense, ...prevExpenses]);
     } catch (error) {
@@ -79,6 +86,7 @@ const ExpensePage = (props) => {
   };
 
   const editExpenseItemHandler = async (expense) => {
+    console.log("from edit", expense.id);
     setIsEditing(false);
 
     try {
@@ -100,18 +108,18 @@ const ExpensePage = (props) => {
       if (!response.ok) {
         throw new Error("Edit Failed!");
       }
-      
-      const data = await response.json();
-      fetchData();
-      
-      console.log("Success:", data);
 
-      setExpensesList((prevExpenses) => [expense, ...prevExpenses]);
+      // const data = await response.json();
+      fetchData();
+
+      setExpenseToEdit(null);
+
+      // console.log("Success:", data);
     } catch (error) {
       console.error("Fetch error:", error);
       alert(error.message);
     }
-  }
+  };
 
   useEffect(
     () => {
@@ -123,6 +131,7 @@ const ExpensePage = (props) => {
 
   const deleteExpenseHandler = async (id) => {
     console.log(id);
+    dispatch(expenseActions.remove({ itemId: id }));
     try {
       await fetch(
         `https://expense-tracker-1a30a-default-rtdb.firebaseio.com/${uEmail}/${id}.json`,
@@ -130,10 +139,13 @@ const ExpensePage = (props) => {
           method: "DELETE",
         }
       );
+      
       const updatedExpenses = expensesList.filter(
         (expense) => expense.id !== id
       );
+      await fetchData();
       setExpensesList(updatedExpenses);
+      
     } catch (error) {
       console.error("Error deleting the expense:", error);
     }
@@ -142,7 +154,7 @@ const ExpensePage = (props) => {
   const editExpenseHandler = (id) => {
     setIsEditing(true);
     const expenseToEdit = expensesList.find((expense) => expense.id === id);
-    setExpenseToEdit(expenseToEdit);
+    setExpenseToEdit(expenseToEdit, id);
   };
 
   return (
@@ -159,6 +171,10 @@ const ExpensePage = (props) => {
             expenseToEdit={expenseToEdit}
           />
         )}
+      </div>
+      <div className={classes.amount_container}>
+        <p className={classes.amount}>Total Expense : <strong>${totalAmount}</strong></p>
+        {totalAmount>=10000 && <button className={classes.premium}>Activate Premium</button>}
       </div>
       <div className={classes.expenses_container}>
         <ExpenseList
