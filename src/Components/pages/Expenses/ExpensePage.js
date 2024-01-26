@@ -38,9 +38,14 @@ const ExpensePage = (props) => {
         ...expense,
       }));
 
+
       const newTotalAmount = expensesArray.reduce((total, expense) => {
         return total + parseFloat(expense.amount);
       }, 0);
+
+      if(expensesArray.length === 0){
+        newTotalAmount = 0;
+      }
 
       
       setExpensesList(expensesArray);
@@ -143,7 +148,10 @@ const ExpensePage = (props) => {
       const updatedExpenses = expensesList.filter(
         (expense) => expense.id !== id
       );
-      await fetchData();
+      fetchData();
+      if(updatedExpenses.length === 0){
+        setTotalAmount(0);
+      }
       setExpensesList(updatedExpenses);
       
     } catch (error) {

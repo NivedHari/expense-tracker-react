@@ -19,6 +19,11 @@
   background-color: #92acee;
 }
 
+.expensesList li:hover {
+  transform: scale(1.05); 
+  transition: transform 0.3s ease;
+}
+
 .edit{
   cursor: pointer;
   background-color: #1a005d;
@@ -30,8 +35,16 @@
 .delete{
   cursor: pointer;
   background-color: #df4b4b;
-  border: 1px solid #f80000;
+  border: 1px solid #c82727;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 12px;
+}
+
+.edit:hover{
+  background-color: #2d0c80;
+}
+
+.delete:hover{
+  background-color: #b13333;
 }
