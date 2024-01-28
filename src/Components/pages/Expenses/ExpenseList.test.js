@@ -16,4 +16,5 @@ describe("Expense Page", () => {
     const total = screen.getByText("Expenses List", { exact: false });
     expect(total).toBeInTheDocument();
   });
+
 });
