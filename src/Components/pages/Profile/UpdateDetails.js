@@ -1,17 +1,15 @@
-import { useRef,useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./UpdateDetails.module.css";
-import { authActions } from "../../store/auth-slice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-
+import { updateUserDetails,fetchUserDetails } from "../../store/auth-actions";
 
 const UpdateDetails = () => {
-  // const authCtx = useContext(AuthContext);
-  // const token = authCtx.token;
-  const token = useSelector(state => state.auth.token);
-  const nameRef = useRef();
-  const urlRef = useRef();
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
   const history = useHistory();
+  const userName = useSelector((state) => state.auth.name);
+  const userUrl = useSelector((state) => state.auth.url);
 
   const [enteredData, setEnteredData] = useState({
     displayName: "",
@@ -19,45 +17,23 @@ const UpdateDetails = () => {
   });
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(
-          "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAEUhj2e9yIbn9BnM3fMuDORzFJrX1w9Fc",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              idToken: token,
-            }),
-          }
-        );
+    const fetchData = async () => {
+      dispatch(fetchUserDetails(token));
+      setEnteredData({
+        displayName: userName,
+        photoUrl: userUrl,
+      });
 
-        if (!response.ok) {
-          const data = await response.json();
-          let errorMessage = "get Failed!";
-          if (data && data.error && data.error.message) {
-            errorMessage = data.error.message;
-          }
-          throw new Error(errorMessage);
-        }
-
-        const userData = await response.json();
-
-        // console.log("User Details:", userData.users[0]);
-
+      if(userUrl === 'https://static-00.iconduck.com/assets.00/profile-icon-512x512-w0uaq4yr.png' || userName === 'Not Set'){
         setEnteredData({
-          displayName: userData.users[0].displayName,
-          photoUrl: userData.users[0].photoUrl,
+          displayName: "",
+          photoUrl: "",
         });
-      } catch (error) {
-        alert(error.message);
       }
     };
 
-    fetchUserData();
-  }, [token]);
+    fetchData();
+  }, [token, userName, userUrl, dispatch]);
 
   const handleNameChange = (event) => {
     setEnteredData((prevData) => ({
@@ -76,41 +52,11 @@ const UpdateDetails = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    let enteredName = nameRef.current.value;
-    let enteredUrl = urlRef.current.value;
+    let enteredName = enteredData.displayName;
+    let enteredUrl = enteredData.photoUrl;
 
-    try {
-      const response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyAEUhj2e9yIbn9BnM3fMuDORzFJrX1w9Fc",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            idToken: token,
-            displayName: enteredName,
-            photoUrl: enteredUrl,
-            returnSecureToken: true,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        const data = await response.json();
-        let errorMessage = "Update Failed!";
-        if (data && data.error && data.error.message) {
-          errorMessage = data.error.message;
-        }
-        throw new Error(errorMessage);
-      }
-
-      const updatedUserData = await response.json();
-      console.log("Update Success. Updated User Details:", updatedUserData);
-      history.replace("/profile");
-    } catch (error) {
-      alert(error.message);
-    }
+    dispatch(updateUserDetails(token, enteredName, enteredUrl));
+    history.replace("/profile");
   };
 
   return (
@@ -123,7 +69,6 @@ const UpdateDetails = () => {
             <input
               type="text"
               id="name"
-              ref={nameRef}
               value={enteredData.displayName}
               onChange={handleNameChange}
             />
@@ -133,7 +78,6 @@ const UpdateDetails = () => {
             <input
               type="text"
               id="photo"
-              ref={urlRef}
               value={enteredData.photoUrl}
               onChange={handleUrlChange}
             />

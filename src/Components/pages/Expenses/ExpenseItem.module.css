@@ -1,10 +1,10 @@
 .edit {
   cursor: pointer;
-  background-color: #1a005d;
-  border: 1px solid #14005d;
+  background-color: grey;
+  border: 1px solid grey;
   color: white;
   padding: 0.5rem 1rem;
-  border-radius: 12px;
+  /* border-radius: 12px; */
 }
 .delete {
   cursor: pointer;
@@ -12,12 +12,12 @@
   border: 1px solid #c82727;
   color: white;
   padding: 0.5rem 1rem;
-  border-radius: 12px;
+  /* border-radius: 12px; */
   width: 5rem;
 }
 
 .edit:hover {
-  background-color: #2d0c80;
+  background-color: rgb(98, 98, 98);
 }
 
 .delete:hover {
@@ -25,10 +25,10 @@
 }
 
 .amountContainer {
-  background-color: #1a005d;
+  background-color: grey;
   padding: 1.5rem;
   height: 3.2rem;
-  border-radius: 12px 0 0 12px;
+  /* border-radius: 12px 0 0 12px; */
   color: white;
   width: 8rem;
   display: flex;
@@ -43,9 +43,9 @@
   top: 0;
   left: 0;
   margin: 0;
-  background-color: #623fba;
+  background-color: #000000;
   color: white;
-  border-radius: 12px 0 12px 0;
+  border-radius: 0 0 12px 0;
   padding: 0.2rem;
   font-size: 0.8rem;
 }

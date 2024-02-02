@@ -1,55 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import classes from "./StartingPage.module.css";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import { authActions } from "../store/auth-slice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUserDetails } from "../store/auth-actions";
 
 const StartingPage = () => {
-  const token = useSelector(state=> state.auth.token);
-  const [profileComplete, setProfileComplete] = useState(true);
-
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const profileComplete = useSelector((state) => state.auth.isComplete);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAEUhj2e9yIbn9BnM3fMuDORzFJrX1w9Fc",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              idToken: token,
-            }),
-          }
-        );
-
-        if (!response.ok) {
-          const data = await response.json();
-          let errorMessage = "get Failed!";
-          if (data && data.error && data.error.message) {
-            errorMessage = data.error.message;
-          }
-          throw new Error(errorMessage);
-        }
-
-        const userData = await response.json();
-        const isProfileComplete =
-          userData.users[0].displayName !== undefined &&
-          userData.users[0].photoUrl !== undefined &&
-          userData.users[0].emailVerified === true;
-        setProfileComplete(isProfileComplete);
-        console.log(profileComplete);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchData();
-  }, [token]);
+    dispatch(fetchUserDetails(token));
+  }, [token, dispatch]);
 
   return (
-    <div>
+    <div className={classes.outer}>
       <div className={classes.page}>
         <div className={classes.container}>
           <h1>Welcome To Expense Tracker</h1>

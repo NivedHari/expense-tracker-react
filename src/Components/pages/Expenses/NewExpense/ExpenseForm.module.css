@@ -10,6 +10,7 @@
   font-weight: bold;
   margin-bottom: 0.5rem;
   display: block;
+  color: var(--text-color)
 }
 
 .control input {
@@ -32,3 +33,7 @@
 .actions {
   text-align: right;
 }
+/* 
+.form {
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+} */

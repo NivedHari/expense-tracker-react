@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { uiActions } from "./ui-slice";
 
 const loadStateFromLocalStorage = () => {
   try {
@@ -8,6 +9,10 @@ const loadStateFromLocalStorage = () => {
         token: "",
         email: "",
         isAuthenticated: false,
+        name: "",
+        url: "",
+        isVerified: false,
+        isComplete: true,
       };
     }
     return JSON.parse(authState);
@@ -47,17 +52,26 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.token = action.payload.token;
       state.email = action.payload.email;
-
-
-
+      
       saveStateToLocalStorage(state);
     },
     logout(state) {
       state.isAuthenticated = false;
       state.token = null;
       state.email = null;
-      removeStateFromLocalStorage();
+      
+      
+      removeStateFromLocalStorage(state);
     },
+    setProfile(state, action) {
+      state.name = action.payload.name;
+      state.url = action.payload.url;
+      state.email = action.payload.email;
+      state.isVerified = action.payload.isVerified;
+    },
+    setCompletion (state,action) {
+      state.isComplete = action.payload.isComplete;
+    }
   },
 });
 

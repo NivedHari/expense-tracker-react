@@ -15,10 +15,20 @@ const ExpenseForm = (props) => {
         amount: props.expenseToEdit.amount,
         description: props.expenseToEdit.description,
         category: props.expenseToEdit.category,
-        id:props.expenseToEdit.id,
+        id: props.expenseToEdit.id,
       });
     }
   }, [props.expenseToEdit]);
+
+  useEffect(() => {
+    if (!isEditMode) {
+      setExpenseData({
+        amount: "",
+        description: "",
+        category: "Food",
+      });
+    }
+  }, [isEditMode]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +41,7 @@ const ExpenseForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Submitted Data:", expenseData);
+    
     if (isEditMode) {
       props.onEditExpense(expenseData);
       setExpenseData({
@@ -51,7 +61,7 @@ const ExpenseForm = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={classes.form}>
       <div className={classes.controls}>
         <div className={classes.control}>
           <label>Money Spent:</label>

@@ -4,9 +4,10 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #91abee;
-  overflow-y: hidden;
-  color: #14005d;
+  background-color: var(--ui-bg-color);
+  /* overflow-y: hidden; */
+  color: var(--text-color);
+  
   
 }
 .container{
@@ -21,13 +22,14 @@
 body {
   margin: 0;
   overflow-x: hidden;
+  
 }
 
 .circle {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #14005d;
+  background-color: var(--li-bg-color);
   border-radius: 50%; 
   width: 70px; 
   height: 70px;
@@ -45,7 +47,7 @@ body {
   position: absolute;
   top: 5rem;
   right: 1rem;
-  background-color: #ffffff84;
+  background-color: #d0d0d084;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -57,7 +59,7 @@ body {
 }
 
 .linkContainer{
-  background-color: #14005d;
+  background-color: #000000;
   color: white;
   width: 10rem;
   border-radius: 12px;
@@ -78,3 +80,4 @@ body {
 .notice a:hover{
   color:#1c027ab4;
 }
+

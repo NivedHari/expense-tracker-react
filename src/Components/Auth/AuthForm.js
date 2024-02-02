@@ -1,9 +1,9 @@
 import classes from "./AuthForm.module.css";
 import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { authActions } from "../store/auth-slice";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
+import { loginUser, signUpUser } from "../store/auth-actions";
 
 const AuthForm = () => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const AuthForm = () => {
 
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
-    const confirmPassword = confirmPasswordInputRef.current.value;
+    const confirmPassword = confirmPasswordInputRef?.current?.value || '';
 
     if (!isLogin && enteredPassword !== confirmPassword) {
       alert("Passwords don't match !! ");
@@ -37,75 +37,17 @@ const AuthForm = () => {
     };
     console.log(user);
 
-    let url;
     if (isLogin) {
-      url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAEUhj2e9yIbn9BnM3fMuDORzFJrX1w9Fc";
-      fetch(url, {
-        method: "POST",
-        body: JSON.stringify({
-          email: enteredEmail,
-          password: enteredPassword,
-          returnSecureToken: true,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            return res.json().then((data) => {
-              let errorMessage = "Authentication Failed!";
-              if (data && data.error && data.error.message) {
-                errorMessage = data.error.message;
-              }
-              throw new Error(errorMessage);
-            });
-          }
-        })
-        .then((data) => {
-          const cleanedMail=`${enteredEmail.replace(/\.|@/g, "")}`;
-          // authCtx.login(data.idToken,cleanedMail);
-          dispatch(authActions.login({ token: data.idToken, email: cleanedMail }));
-          console.log(cleanedMail);
-          history.replace("/");
-        })
-        .catch((err) => {
-          alert(err.message);
-        });
+      dispatch(loginUser(enteredEmail, enteredPassword));
+      history.replace("/");
     } else {
-      url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAEUhj2e9yIbn9BnM3fMuDORzFJrX1w9Fc";
-      fetch(url, {
-        method: "POST",
-        body: JSON.stringify({
-          email: enteredEmail,
-          password: enteredPassword,
-          returnSecureToken: true,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((res) => {
-        if (res.ok) {
-        } else {
-          return res.json().then((data) => {
-            let errorMessage = "Authentication Failed!";
-            if (data && data.error && data.error.message) {
-              errorMessage = data.error.message;
-            }
-            alert(errorMessage);
-          });
-        }
-      });
+      dispatch(signUpUser(enteredEmail, enteredPassword));
     }
   };
   return (
     <div>
       <section className={classes.auth}>
-        <form onSubmit={submitHandler} >
+        <form onSubmit={submitHandler}>
           <div>
             <h1 className={classes.h1}>{isLogin ? "Login" : "Sign Up"}</h1>
           </div>
@@ -129,15 +71,17 @@ const AuthForm = () => {
             />
           </div>
 
-          <div className={classes.control}>
-            <input
-              type="password"
-              id="confirmPassword"
-              required
-              ref={confirmPasswordInputRef}
-              placeholder="Confirm Password"
-            />
-          </div>
+          {!isLogin && (
+            <div className={classes.control}>
+              <input
+                type="password"
+                id="confirmPassword"
+                required
+                ref={confirmPasswordInputRef}
+                placeholder="Confirm Password"
+              />
+            </div>
+          )}
 
           <div className={classes.actions}>
             <button>{isLogin ? "Login" : "Create Account"}</button>

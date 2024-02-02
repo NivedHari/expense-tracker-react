@@ -1,3 +1,17 @@
+/* .expenses_container {
+  background-color: #ffffff79;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  margin: 1rem auto;
+  max-width: 40rem;
+  padding: 1rem;
+  width: 100%;
+  max-width: 800px;
+  overflow-y: auto;
+} */
+
+
+
 .expensesList {
   list-style: none;
   padding: 0;
@@ -15,8 +29,9 @@
   position: relative;
   margin: 1rem 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  border-radius: 12px;
-  background-color: #92acee;
+  /* border-radius: 12px; */
+  background-color: var(--li-bg-color);
+  color: var(--li-text-color);
 }
 
 .expensesList li:hover {
@@ -24,3 +39,30 @@
   transition: transform 0.3s ease;
 }
 
+.heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.download{
+  cursor: pointer;
+  border-radius: 50px;
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  margin: 1rem;
+  background-color: rgb(221, 221, 221);
+}
+
+.download:hover{
+  background-color: rgb(193, 193, 193);
+}
+.download:active{
+  background-color: rgb(158, 158, 158);
+}
+
+.noExpense{
+  margin: auto;
+}

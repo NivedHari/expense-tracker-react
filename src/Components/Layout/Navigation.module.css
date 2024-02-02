@@ -3,25 +3,26 @@
   left: 0;
   width: 100%;
   height: 5rem;
-  background-color: #91abee;
+  background-color: var(--ui-bg-color);
   /* background-color: #2b3dda; */
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2); */
   display: flex;
   justify-content: space-between; 
   align-items: center;
   padding: 0 2rem;
+  position: relative;
   
 }
 
 .logo {
   font-family: "Lato", sans-serif;
   font-size: 2rem;
-  color: #14005d;
+  color: var(--nav-color);
   margin: 0;
 }
 
 .logo:hover{
-  color: #14005d;
+  color: #505050;
 }
 
 .header ul {
@@ -37,15 +38,16 @@
 }
 .header a {
   text-decoration: none;
-  color: #14005d;
+  color: var(--nav-color);
   font-weight: bold;
 }
 
-.header button {
+
+.logoutBtn {
   font: inherit;
   background-color: transparent;
   border: 1px solid white;
-  color: #14005d;
+  color: var(--nav-color);
   font-weight: bold;
   padding: 0.5rem 1.5rem;
   border-radius: 6px;
@@ -54,10 +56,18 @@
 }
 
 .header a:hover {
-  color:white;
+  color: var(--button-hover-color);
 }
 
 .header button:hover {
-  background-color: #91abee9f;
+  background-color: var(--button-hover-color);
   color: white;
+}
+
+.toggleBtn {
+  background-color: transparent;
+  margin: auto;
+  border:none;
+  color: var(--nav-color);
+  
 }

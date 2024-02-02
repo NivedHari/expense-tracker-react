@@ -3,12 +3,18 @@ import classes from "./Navigation.module.css";
 import { Link } from "react-router-dom";
 import { authActions } from "../store/auth-slice";
 import { themeActions } from "../store/theme-slice";
+import { CiLight } from "react-icons/ci";
+import { MdLightMode } from "react-icons/md";
+import { logoutUser } from "../store/auth-actions";
+import { Fragment } from "react";
 
 const Navigation = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
+  const isPremium = useSelector(state=> state.ui.isPremium);
   const logoutHandler = () => {
     dispatch(authActions.logout());
+    dispatch(logoutUser())
   };
   const isDarkMode = useSelector((state) => state.theme.darkMode);
 
@@ -17,15 +23,16 @@ const Navigation = () => {
   };
 
   return (
+    <Fragment>
     <header className={classes.header}>
       <Link to="/expenses">
         <div className={classes.logo}>Expense Tracker</div>
       </Link>
       <nav>
         <ul>
-        <button onClick={toggleThemeHandler}>
-            {isDarkMode ? "Light" : "Dark"}
-          </button>
+        {isPremium && (<button onClick={toggleThemeHandler} className={classes.toggleBtn}>
+            {isDarkMode ? <CiLight size="2rem" /> : <MdLightMode size="2rem" />}
+          </button>)}
           {isLoggedIn && (
             <li>
               <Link to="/profile">Profile</Link>
@@ -41,6 +48,9 @@ const Navigation = () => {
         </ul>
       </nav>
     </header>
+    {/* <div className={classes.head}>
+      </div> */}
+    </Fragment>
   );
 };
 

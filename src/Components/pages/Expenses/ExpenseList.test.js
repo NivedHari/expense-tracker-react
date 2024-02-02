@@ -4,8 +4,8 @@ import { Provider } from "react-redux";
 import store from "./../../store/index";
 import '@testing-library/jest-dom';
 
-describe("Expense Page", () => {
-  test("renders Expenses List Heading", () => {
+describe("Expense List", () => {
+  test("renders no Expenses Added Heading", () => {
     const expenses = [];
     render(
       <Provider store={store}>
@@ -13,7 +13,7 @@ describe("Expense Page", () => {
       </Provider>
     );
 
-    const total = screen.getByText("Expenses List", { exact: false });
+    const total = screen.getByText("No Expenses Added", { exact: false });
     expect(total).toBeInTheDocument();
   });
 

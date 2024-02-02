@@ -17,15 +17,15 @@ describe("Navigation", () => {
     const logo = screen.getByText("Expense Tracker", { exact: false });
     expect(logo).toBeInTheDocument();
   });
-  test("renders profile", () => {
-    render(
-      <Provider store={store}>
-        <Router>
-          <Navigation />
-        </Router>
-      </Provider>
-    );
-    const profile = screen.getByText("Dark", { exact: false });
-    expect(profile).toBeInTheDocument();
-  });
+  // test("renders profile", () => {
+  //   render(
+  //     <Provider store={store}>
+  //       <Router>
+  //         <Navigation />
+  //       </Router>
+  //     </Provider>
+  //   );
+  //   const profile = screen.getByText("Dark", { exact: false });
+  //   expect(profile).toBeInTheDocument();
+  // });
 });

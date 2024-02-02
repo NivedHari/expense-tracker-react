@@ -1,60 +1,58 @@
 .profile {
-    margin: 10rem auto;
-    width: 100%;
-    max-width: 50rem;
-    border-radius: 6px;
-    background-color: #fff8f8;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-    border: 1px solid grey;
-    padding: 1rem;
-    text-align: center;
-  }
+  margin: 10rem auto;
+  width: 100%;
+  max-width: 50rem;
+  border-radius: 12px;
+  background-color: var(--container-bg-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  padding: 1rem;
+  text-align: center;
+  color: var(--text-color);
+  text-shadow: var(--text-shadow);
+}
 
-  .control {
-    margin-bottom: 0.5rem;
-  }
+.control {
+  margin-bottom: 0.5rem;
+}
 
-  .profile h2{
+.profile h2{
 
-    margin-top: 0;
-    margin-bottom: 5rem;
-  }
+  margin-top: 1rem;
+  margin-bottom: 5rem;
+}
 
-  .control label {
-    color: black;
-    margin-bottom: 0.5rem;
-    margin-right: 1rem;
-  }
+.control label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-right: 1rem;
+  text-shadow: var(--text-shadow);
+}
 
-  .field{
-    display: flex;
-    justify-content: space-around;
-  }
+.field{
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 5rem;
+}
 
-  .actions {
-    margin-top: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+.actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .actions button {
-    cursor: pointer;
-    font: inherit;
-    color: white;
-    background-color: #14005d;
-    border: 1px solid #14005dc0;
-    border-radius: 20px;
-    padding: 0.5rem 2.5rem;
-    
-  }
+.actions button {
+  cursor: pointer;
+  font: inherit;
+  color: white;
+  background-color: var(--li-bg-color);
+  border: 1px solid #14005dc0;
+  /* border-radius: 20px; */
+  padding: 0.5rem 2.5rem;
+  
+}
 
-  .btn{
-    cursor: pointer;
-    font: inherit;
-    color: white;
-    background-color: #14005d;
-    border: 1px solid #14005dc8;
-    border-radius: 20px;
-    padding: 0.2rem 1rem;
-  }
+.actions button:hover {
+  background-color: var(--button-hover-color);
+  border-color: var(--button-hover-color);
+}
