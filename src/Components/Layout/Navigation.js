@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import classes from "./Navigation.module.css";
 import { Link } from "react-router-dom";
 import { authActions } from "../store/auth-slice";
 import { themeActions } from "../store/theme-slice";
@@ -24,23 +23,23 @@ const Navigation = () => {
 
   return (
     <Fragment>
-    <header className={classes.header}>
+    <header className="top-0 left-0 w-full flex justify-between items-center px-4 py-4 h-15 absolute dark:text-white " >
       <Link to="/expenses">
-        <div className={classes.logo}>Expense Tracker</div>
+        <div className="text-3xl hover:text-slate-700 dark:hover:text-slate-300">Expense Tracker</div>
       </Link>
       <nav>
-        <ul>
-        {isPremium && (<button onClick={toggleThemeHandler} className={classes.toggleBtn}>
+        <ul className="flex items-center ">
+        {isPremium && (<button className="dark:hover:text-slate-300" onClick={toggleThemeHandler} >
             {isDarkMode ? <CiLight size="2rem" /> : <MdLightMode size="2rem" />}
           </button>)}
           {isLoggedIn && (
             <li>
-              <Link to="/profile">Profile</Link>
+              <Link className="mx-4 hover:text-slate-700 dark:hover:text-slate-300" to="/profile">Profile</Link>
             </li>
           )}
           {isLoggedIn && (
             <li>
-              <button className={classes.logoutBtn} onClick={logoutHandler}>
+              <button className="mx-4 hover:text-slate-700 dark:hover:text-slate-300"  onClick={logoutHandler}>
                 Logout
               </button>
             </li>
@@ -48,8 +47,6 @@ const Navigation = () => {
         </ul>
       </nav>
     </header>
-    {/* <div className={classes.head}>
-      </div> */}
     </Fragment>
   );
 };

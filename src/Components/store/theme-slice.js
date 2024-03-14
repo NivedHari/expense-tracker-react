@@ -9,9 +9,9 @@ const themeSlice = createSlice({
     toggleTheme: (state) => {
       state.darkMode = !state.darkMode;
       if (state.darkMode) {
-        document.querySelector("body").setAttribute("data-theme", "dark");
-      } else{
-        document.querySelector("body").setAttribute("data-theme",'light');
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
       }
     },
   },

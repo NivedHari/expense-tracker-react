@@ -1,48 +1,57 @@
+import React, { lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import "./App.css";
-import AuthPage from "./Components/pages/AuthPage";
-import { authActions } from "./Components/store/auth-slice";
-import StartingPage from "./Components/pages/startingPage";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import Layout from "./Components/Layout/Layout";
-import ForgotPasswordForm from "./Components/Auth/ForgottPassordForm";
-import ExpensePage from "./Components/pages/Expenses/ExpensePage";
-import UpdateDetails from "./Components/pages/Profile/UpdateDetails";
-import Profile from "./Components/pages/Profile/Profile";
+import ReactLoading from "react-loading";
+
+
+const StartingPage = lazy(() => import("./Components/pages/startingPage"));
+const AuthPage = lazy(() => import("./Components/pages/AuthPage"));
+const ForgotPasswordForm = lazy(() => import("./Components/Auth/ForgottPassordForm"));
+const UpdateDetails = lazy(() => import("./Components/pages/Profile/UpdateDetails"));
+const Profile = lazy(() => import("./Components/pages/Profile/Profile"));
+const ExpensePage = lazy(() => import("./Components/pages/Expenses/ExpensePage"));
+
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
+
   return (
     <div className="app">
       <Layout />
-      <Switch>
-        <Route path="/" exact>
-          <StartingPage />
-          {!isLoggedIn && <Redirect to="/auth"></Redirect>}
-        </Route>
-        {!isLoggedIn && (
-          <Route path="/auth" exact>
-            <AuthPage />
+      <Suspense fallback={<ReactLoading className="loading"  type={"spin"} color={"#91abee"} height={50} width={50} />}>
+        <Switch>
+          <Route path="/" exact>
+            <StartingPage />
+            {!isLoggedIn && <Redirect to="/auth"></Redirect>}
           </Route>
-        )}
-        <Route path="/auth/forgot-password">
-          <ForgotPasswordForm />
-        </Route>
-        <Route path='/profile' >
-        {isLoggedIn && <Profile /> }
-        {!isLoggedIn && <Redirect to='/auth'></Redirect> }
-        </Route>
-        <Route path="/update">
-          <UpdateDetails />
-        </Route>
-        {isLoggedIn && (<Route path="/expenses">
-          <ExpensePage />
-        </Route>)}
-        <Route path="*">
-          <Redirect to="/"></Redirect>
-        </Route>
-      </Switch>
+          {!isLoggedIn && (
+            <Route path="/auth" exact>
+              <AuthPage />
+            </Route>
+          )}
+          <Route path="/auth/forgot-password">
+            <ForgotPasswordForm />
+          </Route>
+          <Route path='/profile' >
+            {isLoggedIn && <Profile />}
+            {!isLoggedIn && <Redirect to='/auth'></Redirect>}
+          </Route>
+          <Route path="/update">
+            <UpdateDetails />
+          </Route>
+          {isLoggedIn && (
+            <Route path="/expenses">
+              <ExpensePage />
+            </Route>
+          )}
+          <Route path="*">
+            <Redirect to="/"></Redirect>
+          </Route>
+        </Switch>
+      </Suspense>
     </div>
   );
 }

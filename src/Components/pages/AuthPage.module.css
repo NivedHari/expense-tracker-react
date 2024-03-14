@@ -1,9 +1,0 @@
-.round {
-    background-color: #91abee;
-    position: absolute;
-    width: 110%;
-    height: 25rem;
-    object-fit: cover;
-    transform: rotateZ(8deg) translateY(-8rem) translateX(-2rem);
-    z-index: -1;
-  }

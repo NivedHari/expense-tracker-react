@@ -1,5 +1,4 @@
 import React from "react";
-import classes from "./NewExpense.module.css";
 import ExpenseForm from "./ExpenseForm";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../../store/ui-slice";
@@ -34,9 +33,9 @@ const NewExpense = (props) => {
   };
 
   return (
-    <div className={classes.newExpense}>
+    <div className="p-4 mt-20 mb-0 m-auto w-150 text-center shadow-md bg-sky-300 rounded rounded-b-none dark:bg-zinc-600">
       {!isEditing && (
-        <button onClick={startEditingHandler}>Add New Expense</button>
+        <button className="bg-blue-800 text-white hover:bg-blue-900 py-4 px-3 ml-5 rounded-lg dark:bg-blue-900 dark:hover:bg-blue-950" onClick={startEditingHandler}>Add New Expense</button>
       )}
       {isEditing && (
         <ExpenseForm

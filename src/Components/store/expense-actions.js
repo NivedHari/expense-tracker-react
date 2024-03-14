@@ -7,7 +7,7 @@ export const fetchExpenseData = (email) => {
     const fetchData = async () => {
       dispatch(uiActions.loading({ loading: true }));
       const response = await fetch(
-        `https://expense-tracker-1a30a-default-rtdb.firebaseio.com/${cleanedMail}.json`
+        `https://test-123-d7f3d-default-rtdb.firebaseio.com/${cleanedMail}.json`
       );
 
       if (!response.ok) {
@@ -38,7 +38,7 @@ export const sendExpenseData = (expense, email) => {
   return async (dispatch) => {
     const sendRequest = async () => {
       const response = await fetch(
-        `https://expense-tracker-1a30a-default-rtdb.firebaseio.com/${cleanedMail}.json`,
+        `https://test-123-d7f3d-default-rtdb.firebaseio.com/${cleanedMail}.json`,
         {
           method: "PUT",
           body: JSON.stringify({

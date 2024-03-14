@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import classes from "./UpdateDetails.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { updateUserDetails,fetchUserDetails } from "../../store/auth-actions";
@@ -60,32 +59,34 @@ const UpdateDetails = () => {
   };
 
   return (
-    <section className={classes.profile}>
-      <h2>Contact Details</h2>
+    <section className="bg-sky-200 mt-20 h-max p-6 rounded m-auto w-max dark:bg-opacity-50">
+      <h2 className="text-3xl mb-8 text-center">Contact Details</h2>
       <form onSubmit={submitHandler}>
-        <div className={classes.field}>
-          <div className={classes.control}>
-            <label htmlFor="name">Full Name</label>
+        <div className="flex flex-row">
+          <div className="mb-2">
+            <label className="my-2 mr-2 mb-5" htmlFor="name">Full Name</label>
             <input
               type="text"
               id="name"
               value={enteredData.displayName}
               onChange={handleNameChange}
+              className="my-2 mr-5 w-52 outline-none rounded-md px-2"
             />
           </div>
-          <div className={classes.control}>
-            <label htmlFor="photo">Profile Photo URL</label>
+          <div >
+            <label className="my-2 mr-2 mb-5" htmlFor="photo">Profile Photo URL</label>
             <input
               type="text"
               id="photo"
               value={enteredData.photoUrl}
               onChange={handleUrlChange}
+              className="my-2 w-52 outline-none rounded-md px-2"
             />
           </div>
         </div>
 
-        <div className={classes.actions}>
-          <button>Update</button>
+        <div className="flex justify-center m-8">
+          <button className="bg-blue-800 text-white hover:bg-blue-900 py-2 px-6 ml-5 rounded-lg dark:bg-blue-900 dark:hover:bg-blue-950">Update</button>
         </div>
       </form>
     </section>

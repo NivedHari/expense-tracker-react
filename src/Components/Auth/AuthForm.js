@@ -1,4 +1,3 @@
-import classes from "./AuthForm.module.css";
 import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
@@ -43,54 +42,59 @@ const AuthForm = () => {
     } else {
       dispatch(signUpUser(enteredEmail, enteredPassword));
     }
+
   };
   return (
-    <div>
-      <section className={classes.auth}>
+    <div className="flex flex-col justify-center items-center p-5 mt-20 dark:text-white">
+      <section className="flex text-center justify-center items-center py-4 w-full max-w-sm" >
         <form onSubmit={submitHandler}>
           <div>
-            <h1 className={classes.h1}>{isLogin ? "Login" : "Sign Up"}</h1>
+            <h1 className="text-center text-3xl m-4">{isLogin ? "Login" : "Sign Up"}</h1>
           </div>
-          <div className={classes.control}>
+          <div className="mb-2">
             <input
               type="email"
               id="email"
               required
               ref={emailInputRef}
               placeholder="Your Email"
+              className="mb-4 rounded w-96 px-2 py-1 bg-slate-200 outline-none"
+
             />
           </div>
 
-          <div className={classes.control}>
+          <div className="mb-2">
             <input
               type="password"
               id="password"
               required
               ref={passwordInputRef}
               placeholder="Your Password"
+              className="mb-4 rounded w-96 px-2 py-1 bg-slate-200 outline-none"
             />
           </div>
-
           {!isLogin && (
-            <div className={classes.control}>
+            <div >
               <input
                 type="password"
                 id="confirmPassword"
                 required
                 ref={confirmPasswordInputRef}
                 placeholder="Confirm Password"
+                className="mb-4 rounded w-96 px-2 py-1 bg-slate-200 outline-none"
               />
             </div>
           )}
 
-          <div className={classes.actions}>
-            <button>{isLogin ? "Login" : "Create Account"}</button>
+          {isLogin && <Link className='hover:text-slate-600 dark:hover:text-slate-200' to="/auth/forgot-password">Forgot Password?</Link>}
+
+          <div className="mt-4" >
+            <button className="bg-blue-800 text-white hover:bg-blue-900 py-1 px-6 rounded-lg dark:bg-blue-900 dark:hover:bg-blue-950">{isLogin ? "Login" : "Create Account"}</button>
           </div>
-          {isLogin && <Link to="/auth/forgot-password">Forgot Password?</Link>}
         </form>
       </section>
-      <div className={classes.create} onClick={switchAuthModeHandler}>
-        {isLogin ? "Create new account" : "Login with existing account"}
+      <div className="hover:cursor-pointer underline hover:text-slate-700 dark:hover:text-slate-200"  onClick={switchAuthModeHandler}>
+        {isLogin ? "Dont' have an account? Sign up" : "Already have an account? Login"}
       </div>
     </div>
   );

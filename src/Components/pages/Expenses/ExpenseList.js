@@ -1,5 +1,4 @@
 import React from "react";
-import classes from "./ExpenseList.module.css";
 import ExpenseItem from "./ExpenseItem";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
@@ -24,9 +23,7 @@ const ExpenseList = (props) => {
     const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
     const link = document.createElement("a");
   
-    if (navigator.msSaveBlob) {
-      navigator.msSaveBlob(blob, "expenses.csv");
-    } else {
+    
       const linkHref = URL.createObjectURL(blob);
       link.href = linkHref;
       link.style = "visibility:hidden";
@@ -34,18 +31,17 @@ const ExpenseList = (props) => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-    }
+    
   };
   return (
-    <div className={classes.expenses_container}>
-      <section className={classes.expense}>
-        <div className={classes.expensesList}>
-          <div className={classes.heading}>
-            {expenseItems.length !== 0 && (<h2 className={classes.heading}>Expenses List</h2>)}
-            {expenseItems.length === 0 && (<h2 className={classes.noExpense}>No Expenses Added</h2>)}
-            {expenseItems.length !== 0 && <button className={classes.download} onClick={downloadCSV}><FaDownload size="1.5rem"/></button>}
+    <div >
+      <section >
+          <div className="flex justify-between my-5">
+            {expenseItems.length !== 0 && (<h2 className="text-2xl font-semibold dark:text-white">Expenses List</h2>)}
+            {expenseItems.length === 0 && (<h2 className="text-2xl font-semibold dark:text-white">No Expenses Added</h2>)}
+            {expenseItems.length !== 0 && <button className="dark:text-white"  onClick={downloadCSV}><FaDownload size="1.5rem"/></button>}
           </div>
-          <ul className={classes.expensesList}>
+          <ul >
             {expenseItems.map((expense) => (
               <ExpenseItem
                 key={expense.id}
@@ -56,7 +52,6 @@ const ExpenseList = (props) => {
               />
             ))}
           </ul>
-        </div>
       </section>
     </div>
   );

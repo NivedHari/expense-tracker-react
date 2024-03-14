@@ -8,8 +8,6 @@ import ExpenseList from "./ExpenseList";
 import TotalExpense from "./TotalExpense";
 import { fetchExpenseData, sendExpenseData } from "../../store/expense-actions";
 import ReactLoading from "react-loading";
-import classes from './ExpensePage.module.css';
-
 
 let isInitial = true;
 
@@ -17,8 +15,8 @@ const ExpensePage = (props) => {
   const dispatch = useDispatch();
   const [expenseToEdit, setExpenseToEdit] = useState(null);
   const expenses = useSelector((state) => state.expense.items);
-  const isLoading = useSelector(state=> state.ui.isLoading);
-  const email = useSelector(state=> state.auth.email);
+  const isLoading = useSelector((state) => state.ui.isLoading);
+  const email = useSelector((state) => state.auth.email);
 
   useEffect(() => {
     dispatch(fetchExpenseData(email));
@@ -32,9 +30,9 @@ const ExpensePage = (props) => {
       return;
     }
     if (expense.changed) {
-      dispatch(sendExpenseData(expense,email));
+      dispatch(sendExpenseData(expense, email));
     }
-  }, [expense, dispatch,email]);
+  }, [expense, dispatch, email]);
 
   const addExpenseHandler = (expense) => {
     dispatch(
@@ -79,9 +77,19 @@ const ExpensePage = (props) => {
         <TotalExpense />
       </div>
 
-      <div className={classes.expenses_container}>
-        {!isLoading && (<ExpenseList expenses={expenses} onEdit={editExpenseHandler} />)}
-        {isLoading  && <ReactLoading className={classes.loading} type={"spin"} color={"#91abee"} height={50} width={50} />}
+      <div className="w-150 m-auto shadow-md p-5 bg-sky-300 rounded rounded-t-none dark:bg-zinc-600">
+        {!isLoading && (
+          <ExpenseList expenses={expenses} onEdit={editExpenseHandler} />
+        )}
+        {isLoading && (
+          <ReactLoading
+            className="m-auto"
+            type={"spin"}
+            color={"#91abee"}
+            height={50}
+            width={50}
+          />
+        )}
       </div>
     </Fragment>
   );
